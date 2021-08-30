@@ -32,7 +32,7 @@ router.post('/alunos/respostas', async (req, res) => {
             }
         }
 
-        Alunos.findOneAndUpdate({_id: req.body._id}, {respostas: req.body.respostas, nota: notaInicial}, function(
+        Alunos.findOneAndUpdate({_id: req.body._id}, {respostas: req.body.respostas, nota: notaInicial, aprovado: true}, function(
             err,
             result
         ){
