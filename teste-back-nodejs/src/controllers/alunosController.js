@@ -3,6 +3,8 @@ const server = require('..');
 const { create } = require('../models/Alunos');
 const Alunos = require('../models/Alunos');
 
+const gabarito = ["d","b","d","c","b","c","a","b","a","a"];
+
 const router = express.Router();
 
 router.post('/alunos', async (req, res) => {
@@ -19,11 +21,18 @@ router.post('/alunos', async (req, res) => {
     }
 });
 
-router.post('/alunos/:alunoId/respostas', async (req, res) => {
+router.post('/alunos/respostas', async (req, res) => {
     try {
 
+        var notaInicial = 0;
 
-        Alunos.findOneAndUpdate({_id: req.params.alunoId}, {respostas: req.body.respostas}, function(
+        for(let i = 0; i < gabarito.length; i++){
+            if(gabarito[i] === req.body.respostas[i]){
+                notaInicial += 1;
+            }
+        }
+
+        Alunos.findOneAndUpdate({_id: req.body._id}, {respostas: req.body.respostas, nota: notaInicial}, function(
             err,
             result
         ){
