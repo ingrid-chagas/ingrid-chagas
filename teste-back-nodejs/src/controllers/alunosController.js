@@ -18,12 +18,28 @@ router.post('/alunos', async (req, res) => {
     }
 });
 
-/*router.post('/alunos/respostas', async (req, res) => {
-    const respostasAluno = await Alunos.create(req.body);
-    return console.log(respostasAluno);
-    //return res.status(200).send({respostasAluno, mensagem:'Respostas salvas com sucesso'});
+router.post('/alunos/:alunoId/respostas', async (req, res) => {
+    try {
+        Alunos.findOneAndUpdate({_id: req.params.alunoId}, {respostas: req.body.respostas}, function(
+            err,
+            result
+        ){
+            if(err) {
+                res.status(400).send({error: 'Falhou aqui'});
+            } else {
+                console.log(req.body.respostas);
+                console.log("-------------------------------")
+                console.log(result);
+                res.status(200).send(result);
+            }
+        });
+        
+        //return res.status(200).send({respostaAluno, mensagem:'Respostas salvas com sucesso'});
+    } catch (error) {
+        return res.status(400).send({error: 'Erro no Registro'})
+    }
     
-});*/
+});
 
 router.get('/alunos/:alunoId/status', async (req, res) => {
     try{
