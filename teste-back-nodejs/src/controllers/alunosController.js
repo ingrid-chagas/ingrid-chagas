@@ -1,5 +1,6 @@
 const express = require('express'); 
 const server = require('..');
+const { create } = require('../models/Alunos');
 const Alunos = require('../models/Alunos');
 
 const router = express.Router();
@@ -20,6 +21,8 @@ router.post('/alunos', async (req, res) => {
 
 router.post('/alunos/:alunoId/respostas', async (req, res) => {
     try {
+
+
         Alunos.findOneAndUpdate({_id: req.params.alunoId}, {respostas: req.body.respostas}, function(
             err,
             result
@@ -27,10 +30,10 @@ router.post('/alunos/:alunoId/respostas', async (req, res) => {
             if(err) {
                 res.status(400).send({error: 'Falhou aqui'});
             } else {
-                console.log(req.body.respostas);
-                console.log("-------------------------------")
-                console.log(result);
-                res.status(200).send(result);
+                res.status(201).send({
+                    status: "created",
+                    mensagem: "Respostas salvas com sucesso"
+                });
             }
         });
         
