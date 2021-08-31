@@ -11,7 +11,3 @@ require('./controllers/questoesController')(server);
 
 module.exports = server;
 
-/*server.get('/questoes', (req, res) => {
-    return res.json(questoes);
-    })*/
-
